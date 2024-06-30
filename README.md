@@ -11,9 +11,7 @@ FinMan Auth Service is a microservice responsible for handling authentication an
 - [Usage](#usage)
 - [Testing](#testing)
 - [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
-
+ 
 ## Prerequisites
 
 - Go 1.22 or higher
@@ -94,6 +92,3 @@ docker build -t finman-auth-service-test -f Dockerfile.test .
 docker run --env-file .env finman-auth-service-test
 ```
 
-## API Documentation
-
-The API documentation is generated using Swagger. To access the API documentation, start the service and navigate to `http://localhost:8080/swagger/index.html`.
