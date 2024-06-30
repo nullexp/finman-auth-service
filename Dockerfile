@@ -11,7 +11,7 @@ COPY . .
 RUN go mod tidy
 
 # Build the Go application
-RUN go build -o fileman-auth-service ./cmd/
+RUN go build -o fileman-auth-service ./cmd/ 
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
