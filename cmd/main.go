@@ -8,15 +8,14 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/joho/godotenv"
 	"github.com/nullexp/finman-auth-service/internal/adapter/driven"
 	grpcDriver "github.com/nullexp/finman-auth-service/internal/adapter/driver/grpc"
 	authv1 "github.com/nullexp/finman-auth-service/internal/adapter/driver/grpc/proto/auth/v1"
 	driver "github.com/nullexp/finman-auth-service/internal/adapter/driver/service"
-	"github.com/nullexp/finman-auth-service/internal/port/model"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -33,6 +32,7 @@ func main() {
 	jwtExpireMinute := os.Getenv("JWT_EXPIRE_MINUTE")
 	port := os.Getenv("PORT")
 	ip := os.Getenv("IP")
+	userServiceAddr := os.Getenv("USER_SERVICE_ADDR")
 	duration, err := strconv.Atoi(jwtExpireMinute)
 	if err != nil {
 		log.Fatal("duration should be a valid number")
@@ -49,12 +49,16 @@ func main() {
 	s := grpc.NewServer()
 
 	tokenService := driven.NewTokenService(jwtSecret, time.Duration(int(time.Minute)*duration))
-	userService := driven.NewMockUserService()
-	userService.SetGetUserResponse(&model.GetUserResponse{
-		IsAdmin: true,
-		Id:      uuid.New().String(),
-	}, nil)
 
+	conn, err := establishGRPCConnection(userServiceAddr, 10)
+	if err != nil {
+		log.Fatalf("Failed to connect: %v", err)
+	}
+	defer conn.Close()
+
+	// Create UserService client
+
+	userService := driven.NewUserService(conn)
 	authService := driver.NewAuthService(userService, tokenService)
 	service := grpcDriver.NewAuthService(authService)
 
@@ -69,4 +73,21 @@ func main() {
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
+}
+
+// establishGRPCConnection establishes a gRPC connection with retry mechanism
+func establishGRPCConnection(serverAddr string, retryAttempts int) (*grpc.ClientConn, error) {
+	var conn *grpc.ClientConn
+	var err error
+
+	for i := 0; i < retryAttempts; i++ {
+		conn, err = grpc.NewClient(serverAddr, grpc.WithTransportCredentials(insecure.NewCredentials())) // insecure for test purpose
+		if err == nil {
+			log.Println("connected")
+			return conn, nil
+		}
+		log.Printf("Failed to connect (attempt %d): %v", i+1, err)
+		time.Sleep(2 * time.Second) // Retry after 2 seconds
+	}
+	return nil, err
 }
