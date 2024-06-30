@@ -23,7 +23,6 @@ func (as AuthService) CreateToken(ctx context.Context, dto model.CreateTokenRequ
 	}
 
 	user, err := as.userService.GetUser(ctx, dto.Username, dto.Password)
-
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +32,6 @@ func (as AuthService) CreateToken(ctx context.Context, dto model.CreateTokenRequ
 	}
 
 	token, err := as.tokenService.CreateToken(model.Subject{UserId: user.Id, IsAdmin: user.IsAdmin})
-
 	if err != nil {
 		return nil, err
 	}

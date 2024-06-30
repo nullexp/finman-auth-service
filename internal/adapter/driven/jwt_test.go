@@ -49,7 +49,6 @@ func TestTokenServiceGetToken(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, subject.UserId, sub.UserId)
 	assert.Equal(t, subject.IsAdmin, sub.IsAdmin)
-
 }
 
 func TestTokenServiceCheckToken(t *testing.T) {

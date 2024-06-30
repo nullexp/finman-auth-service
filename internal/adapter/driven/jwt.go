@@ -110,7 +110,6 @@ func (ts TokenService) CheckToken(tokenString string) (bool, error) {
 		}
 		return []byte(ts.secret), nil
 	})
-
 	// Check if there was an error parsing the token.
 	if err != nil {
 		log.Printf("Error checking token: %v", err)

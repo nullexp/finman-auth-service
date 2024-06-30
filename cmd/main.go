@@ -20,7 +20,6 @@ import (
 )
 
 func main() {
-
 	log.Println("Starting the server")
 
 	err := godotenv.Load()
