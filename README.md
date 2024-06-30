@@ -11,9 +11,7 @@ FinMan Auth Service is a microservice responsible for handling authentication an
 - [Usage](#usage)
 - [Testing](#testing)
 - [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
-
+ 
 ## Prerequisites
 
 - Go 1.22 or higher
