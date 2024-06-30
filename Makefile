@@ -28,3 +28,9 @@ lint:
 
 test:
 	go test ./...
+
+docker-build:
+	docker build -t finman-auth-service .
+
+docker-run:
+	docker run -p 8080:8080 finman-auth-service
