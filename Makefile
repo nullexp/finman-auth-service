@@ -11,7 +11,7 @@ buf:
 	curl -o ./proto/user/v1/user.proto https://raw.githubusercontent.com/nullexp/finman-user-service/main/proto/user/v1/user.proto
 	@env PATH="$$PATH:$$(go env GOPATH)/bin" buf generate --template proto/buf.gen.yaml proto
 	@echo "✅ buf done!"
-	rm -rf "./proto/user/v1"
+	rm -rf "./proto/user"
 
 buf-win:
 	mkdir ".\proto\user\v1"
