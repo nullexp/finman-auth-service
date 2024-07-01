@@ -7,8 +7,8 @@ import (
 )
 
 type CreateTokenRequest struct {
-	Username string `validate:"required,gte=1"`
-	Password string `validate:"required,gte=1"`
+	Username string `json:"username" validate:"required,gte=1"`
+	Password string `json:"password" validate:"required,gte=1"`
 }
 
 func (dto CreateTokenRequest) Validate(ctx context.Context) error {
@@ -17,5 +17,5 @@ func (dto CreateTokenRequest) Validate(ctx context.Context) error {
 }
 
 type CreateTokenResponse struct {
-	Token string
+	Token string `json:"token"`
 }
