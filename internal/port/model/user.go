@@ -1,6 +1,6 @@
 package model
 
 type GetUserResponse struct {
-	Id      string
-	IsAdmin bool
+	Id      string `json:"id"`
+	IsAdmin bool   `json:"usAdmin"`
 }
