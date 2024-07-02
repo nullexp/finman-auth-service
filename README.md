@@ -1,7 +1,7 @@
 
 # FinMan Auth Service
 
-FinMan Auth Service is a microservice responsible for handling authentication and JWT token management. This service provides functionalities to create tokens based on user credentials and validates tokens for authentication if required.
+FinMan Auth Service is a microservice responsible for handling authentication and JWT token management. This service provides functionalities to create tokens based on user credentials and validates tokens for authentication if required. Please note that the default username and password is admin.
 
 ## Table of Contents
 
