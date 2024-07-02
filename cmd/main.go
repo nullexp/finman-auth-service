@@ -49,6 +49,7 @@ func main() {
 
 	tokenService := driven.NewTokenService(jwtSecret, time.Duration(int(time.Minute)*duration))
 
+	log.Println("User service address: ", userServiceAddr)
 	conn, err := establishGRPCConnection(userServiceAddr, 10)
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)

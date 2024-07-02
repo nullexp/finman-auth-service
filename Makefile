@@ -36,3 +36,9 @@ docker-build:
 
 docker-run:
 	docker run -p 8080:8080 finman-auth-service
+
+docker-compose-up:
+	docker-compose up --build 
+
+docker-compose-down:
+	docker-compose down --volumes

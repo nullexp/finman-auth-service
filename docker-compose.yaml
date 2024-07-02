@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  finman-auth-service:
+    image: finman-auth-service
+    container_name: finman-auth-container
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      JWT_SECRET: eDM!":jmx2/QoHBlY'.O8e4?Uy,",9
+      JWT_EXPIRE_MINUTE: 20
+      PORT: 8080
+      IP: 0.0.0.0
+      USER_SERVICE_ADDR: finman-user-service:8081  # Specify the hostname and port of 'finman-user-service'
+    ports:
+      - "8080:8080"
+    networks:
+      - finman-network
+    restart: always
+
+networks:
+  finman-network:
+    driver: bridge
+    external: true
